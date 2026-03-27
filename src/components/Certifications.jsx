@@ -10,7 +10,7 @@ export default function Certifications() {
   const [certs, setCerts] = useState([]);
 
   useEffect(() => {
-    fetch("http://127.0.0.1:8000/api/certifications/")
+    fetch("/api/certifications/")
       .then(res => res.json())
       .then(data => setCerts(data))
       .catch(err => console.error(err));
