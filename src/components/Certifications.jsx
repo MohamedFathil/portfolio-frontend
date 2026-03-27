@@ -1,11 +1,4 @@
-const CERTS = [
-  { icon: "🐍", title: "Crash Course on Python", issuer: "Coursera" },
-  { icon: "⚛️", title: "React JS for Beginners", issuer: "Udemy" },
-  { icon: "🏆", title: "Python Problem Solving (Levels 1 & 2)", issuer: "CodeChef" },
-  { icon: "📊", title: "Data Analytics", issuer: "NoviTech Pvt. Ltd" },
-  { icon: "🗄️", title: "SQL BootCamp", issuer: "LetsUpgrade" },
-  { icon: "🤖", title: "Machine Learning with Python", issuer: "IBM" },
-];
+import { useEffect, useState } from "react";
 
 const ACHIEVEMENTS = [
   { icon: "🥇", value: "200+", label: "Problems on GeeksforGeeks" },
@@ -14,12 +7,21 @@ const ACHIEVEMENTS = [
 ];
 
 export default function Certifications() {
+  const [certs, setCerts] = useState([]);
+
+  useEffect(() => {
+    fetch("https://portfolio-backend-4dww.onrender.com/api/certifications/")
+      .then(res => res.json())
+      .then(data => setCerts(data))
+      .catch(err => console.error(err));
+  }, []);
+
   return (
     <section className="section" id="certifications">
       <span className="section-label">05 — Credentials</span>
       <h2 className="section-title">Certifications & Achievements</h2>
 
-      {/* Achievements bar */}
+      {/* Achievements */}
       <div style={{
         display: "grid", gridTemplateColumns: "repeat(3, 1fr)",
         gap: "16px", marginBottom: "48px",
@@ -31,35 +33,35 @@ export default function Certifications() {
             borderRadius: "var(--radius)",
             padding: "28px",
             textAlign: "center",
-            transition: "all 0.3s ease",
-          }}
-          onMouseEnter={(e) => {
-            e.currentTarget.style.transform = "translateY(-6px)";
-            e.currentTarget.style.boxShadow = "0 20px 50px rgba(0,0,0,0.4), 0 0 30px var(--glow-cyan)";
-          }}
-          onMouseLeave={(e) => {
-            e.currentTarget.style.transform = "";
-            e.currentTarget.style.boxShadow = "";
           }}>
-            <div style={{ fontSize: "32px", marginBottom: "8px" }}>{a.icon}</div>
-            <div style={{
-              fontFamily: "'Syne', sans-serif", fontSize: "36px", fontWeight: "800",
-              background: "linear-gradient(135deg, var(--accent-cyan), var(--accent-violet))",
-              WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent",
-            }}>{a.value}</div>
-            <div style={{ fontSize: "13px", color: "var(--text-secondary)", marginTop: "4px" }}>{a.label}</div>
+            <div style={{ fontSize: "32px" }}>{a.icon}</div>
+            <div style={{ fontSize: "36px", fontWeight: "800" }}>{a.value}</div>
+            <div style={{ fontSize: "13px" }}>{a.label}</div>
           </div>
         ))}
       </div>
 
+      {/* Certifications */}
       <div className="cert-grid">
-        {CERTS.map((c, i) => (
-          <div className="cert-card" key={i}>
-            <div className="cert-icon">{c.icon}</div>
+        {certs.map((c) => (
+          <div className="cert-card" key={c.id}>
+
+            {/* ✅ Show image if exists */}
+            {c.image ? (
+              <img 
+                src={c.image} 
+                alt={c.title} 
+                style={{ width: "60px", height: "60px", objectFit: "cover", borderRadius: "6px" }} 
+              />
+            ) : (
+              <div className="cert-icon">{c.icon}</div>
+            )}
+
             <div>
               <div className="cert-title">{c.title}</div>
               <div className="cert-issuer">{c.issuer}</div>
             </div>
+
           </div>
         ))}
       </div>
