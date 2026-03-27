@@ -195,6 +195,75 @@ main { position: relative; z-index: 1; }
   background: var(--glow-cyan);
 }
 
+.hire-me-btn {
+  font-size: 12px;
+  padding: 10px 20px;
+}
+
+/* Mobile Menu */
+.mobile-menu-icon {
+  display: none;
+  cursor: pointer;
+  z-index: 101;
+}
+
+.bar {
+  width: 25px;
+  height: 3px;
+  background-color: var(--text-primary);
+  margin: 5px 0;
+  transition: 0.4s;
+}
+
+.bar1-open { transform: rotate(-45deg) translate(-5px, 6px); }
+.bar2-open { opacity: 0; }
+.bar3-open { transform: rotate(45deg) translate(-5px, -6px); }
+
+.mobile-menu {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(2, 4, 8, 0.98);
+  backdrop-filter: blur(10px);
+  z-index: 100;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  transform: translateX(-100%);
+  transition: transform 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.mobile-menu.open {
+  transform: translateX(0);
+  display: flex;
+}
+
+.mobile-menu ul {
+  list-style: none;
+  text-align: center;
+}
+
+.mobile-menu li {
+  margin: 20px 0;
+}
+
+.mobile-menu a {
+  font-family: 'Syne', sans-serif;
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--text-primary);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.mobile-menu a:hover {
+  color: var(--accent-cyan);
+}
+
+
 /* ── Hero ── */
 .hero {
   min-height: 100vh;
@@ -667,44 +736,57 @@ main { position: relative; z-index: 1; }
 /* ── Certifications ── */
 .cert-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-  gap: 16px;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
 }
 
 .cert-card {
   background: var(--bg-card);
   border: 1px solid var(--border);
   border-radius: var(--radius);
-  padding: 22px;
+  padding: 24px;
   transition: all 0.3s ease;
-  display: flex; align-items: center; gap: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 16px;
 }
 
 .cert-card:hover {
   border-color: var(--border-hover);
-  transform: translateY(-4px);
+  transform: translateY(-6px);
   box-shadow: 0 16px 40px rgba(0,0,0,0.4), 0 0 20px var(--glow-cyan);
 }
 
+.cert-image {
+  width: 100px;
+  height: 100px;
+  object-fit: contain;
+  border-radius: 8px;
+  margin-bottom: 8px;
+}
+
 .cert-icon {
-  width: 48px; height: 48px; flex-shrink: 0;
+  width: 80px; height: 80px; flex-shrink: 0;
   border-radius: 10px;
   background: linear-gradient(135deg, var(--accent-cyan), var(--accent-violet));
   display: flex; align-items: center; justify-content: center;
-  font-size: 20px;
+  font-size: 32px;
+  margin-bottom: 8px;
 }
 
 .cert-title {
-  font-size: 13px; font-weight: 600;
+  font-size: 14px; font-weight: 600;
   line-height: 1.4;
   color: var(--text-primary);
 }
 
 .cert-issuer {
   font-family: 'DM Mono', monospace;
-  font-size: 11px;
+  font-size: 12px;
   color: var(--accent-cyan);
-  margin-top: 4px;
+  margin-top: 6px;
   letter-spacing: 0.5px;
 }
 
@@ -820,17 +902,31 @@ main { position: relative; z-index: 1; }
 .fade-up-delay-4 { animation-delay: 0.4s; }
 
 /* ── Responsive ── */
+@media (max-width: 1024px) {
+  .cert-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
 @media (max-width: 900px) {
-  .hero-inner { grid-template-columns: 1fr; gap: 48px; }
+  .hero-inner { grid-template-columns: 1fr; gap: 48px; text-align: center; }
+  .hero-actions { justify-content: center; }
   .about-grid { grid-template-columns: 1fr; }
   .contact-grid { grid-template-columns: 1fr; }
   .navbar { padding: 16px 20px; }
-  .nav-links { display: none; }
-  .hero-3d-card { width: 280px; height: 340px; }
+  .nav-links { display: none; } /* Will be replaced by a mobile menu */
+  .hero-3d-card { display: none; } /* Hide complex 3D card on smaller screens */
 }
 
 @media (max-width: 600px) {
   .section { padding: 70px 16px; }
+  .section-title { font-size: 28px; margin-bottom: 40px; }
   .projects-grid { grid-template-columns: 1fr; }
   .skills-grid { grid-template-columns: 1fr; }
+  .cert-grid {
+    grid-template-columns: 1fr;
+  }
+  .achievements-grid {
+    grid-template-columns: 1fr;
+  }
 }

@@ -10,7 +10,7 @@ export default function Certifications() {
   const [certs, setCerts] = useState([]);
 
   useEffect(() => {
-    fetch("https://portfolio-backend-4dww.onrender.com/api/certifications/")
+    fetch("http://127.0.0.1:8000/api/certifications/")
       .then(res => res.json())
       .then(data => setCerts(data))
       .catch(err => console.error(err));
@@ -45,13 +45,12 @@ export default function Certifications() {
       <div className="cert-grid">
         {certs.map((c) => (
           <div className="cert-card" key={c.id}>
-
             {/* ✅ Show image if exists */}
             {c.image ? (
               <img 
                 src={c.image} 
                 alt={c.title} 
-                style={{ width: "60px", height: "60px", objectFit: "cover", borderRadius: "6px" }} 
+                className="cert-image" 
               />
             ) : (
               <div className="cert-icon">{c.icon}</div>
@@ -61,7 +60,6 @@ export default function Certifications() {
               <div className="cert-title">{c.title}</div>
               <div className="cert-issuer">{c.issuer}</div>
             </div>
-
           </div>
         ))}
       </div>
